@@ -1,0 +1,6 @@
+@WebAPICuidArte_HostAddress = http://localhost:5004
+
+GET {{WebAPICuidArte_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
