@@ -18,6 +18,7 @@ namespace WebAPICuidArte.Data
         public DbSet<AdultoMayorEnfermedad> AdultoMayorEnfermedades { get; set; }
         public DbSet<Contacto> Contactos { get; set; }
         public DbSet<CitaMedica> CitasMedicas { get; set; }
+        public DbSet<Lectura> Lecturas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,6 +35,7 @@ namespace WebAPICuidArte.Data
                 .ToTable("AdultoMayorEnfermedad").HasKey(ame => new { ame.AdultoMayorId, ame.EnfermedadId });
             modelBuilder.Entity<Contacto>().ToTable("Contacto");
             modelBuilder.Entity<CitaMedica>().ToTable("CitaMedica");
+            modelBuilder.Entity<Lectura>().ToTable("Lectura");
 
             modelBuilder.Entity<Contacto>()
                 .HasOne<AdultoMayor>().WithMany().HasForeignKey(c => c.AdultoMayorId).OnDelete(DeleteBehavior.Cascade);
