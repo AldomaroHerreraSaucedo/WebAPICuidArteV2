@@ -44,5 +44,6 @@ namespace WebAPICuidArte.Models
         [Display(Name = "Minutos leídos")]
         public int MinutosLeidos { get; set; }
         public string FechaRegistro { get; set; }
+        public string Apreciacion { get; set; }
     }
 }

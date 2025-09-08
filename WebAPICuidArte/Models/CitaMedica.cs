@@ -23,5 +23,8 @@ namespace WebAPICuidArte.Models
         [Required(ErrorMessage = "Campo Direccion obligatorio.")]
         [Display(Name = "Direccion:")]
         public string Direccion { get; set; }
+        [Required(ErrorMessage = "Campo Es Atendido obligatorio.")]
+        [Display(Name = "Es Atendido:")]
+        public bool EsAtendido { get; set; }
     }
 }
