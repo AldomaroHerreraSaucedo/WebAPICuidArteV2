@@ -23,5 +23,8 @@ namespace WebAPICuidArte.Models
         public string AnioPublicacion { get; set; }
 
         public string FechaRegistro { get; set; }
+        public bool EsFisico { get; set; }
+        public string RutaPDF { get; set; }
+        public int UltimaPaginaLeida {  get; set; }
     }
 }
