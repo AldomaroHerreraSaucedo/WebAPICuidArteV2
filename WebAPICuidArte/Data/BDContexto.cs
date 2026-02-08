@@ -13,6 +13,7 @@ namespace WebAPICuidArte.Data
         public DbSet<Cuidador> Cuidadores { get; set; }
         public DbSet<AdultoMayorCuidador> AdultoMayorCuidadores { get; set; }
         public DbSet<Medicamento> Medicamentos { get; set; }
+        public DbSet<MedicamentoHorario> MedicamentoHorarios { get; set; }
         public DbSet<AdultoMayorMedicamento> AdultoMayorMedicamentos { get; set; }
         public DbSet<Enfermedad> Enfermedades { get; set; }
         public DbSet<AdultoMayorEnfermedad> AdultoMayorEnfermedades { get; set; }
@@ -27,7 +28,18 @@ namespace WebAPICuidArte.Data
             modelBuilder.Entity<Cuidador>().ToTable("Cuidador");
             modelBuilder.Entity<AdultoMayorCuidador>()
                 .ToTable("AdultoMayorCuidador").HasKey(amc => new { amc.AdultoMayorId, amc.CuidadorId });
+            
             modelBuilder.Entity<Medicamento>().ToTable("Medicamento");
+            modelBuilder.Entity<MedicamentoHorario>().ToTable("MedicamentoHorario");
+            modelBuilder.Entity<MedicamentoHorario>()
+                .HasOne(h => h.Medicamento)
+                .WithMany(m => m.Horarios)
+                .HasForeignKey(h => h.MedicamentoId)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<MedicamentoHorario>()
+                .HasIndex(h => new { h.MedicamentoId, h.Hora })
+                .IsUnique();
+            
             modelBuilder.Entity<AdultoMayorMedicamento>()
                 .ToTable("AdultoMayorMedicamento").HasKey(amm => new { amm.AdultoMayorId, amm.MedicamentoId });
             modelBuilder.Entity<Enfermedad>().ToTable("Enfermedad");

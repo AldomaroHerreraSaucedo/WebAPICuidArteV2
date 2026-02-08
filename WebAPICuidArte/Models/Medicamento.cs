@@ -15,17 +15,9 @@ namespace WebAPICuidArte.Models
         [Display(Name = "Dosis del Medicamento:")]
         public string Dosis { get; set; }
 
-        [Required(ErrorMessage = "Campo Hora de Inicio obligatorio.")]
-        [Display(Name = "Hora de Inicio del Medicamento:")]
-        public string HoraInicio { get; set; }
-
         [Required(ErrorMessage = "Campo Fecha Inicio obligatorio.")]
         [Display(Name = "Fecha de Inicio:")]
         public string FechaInicio { get; set; }
-
-        [Required(ErrorMessage = "Campo Intervalo obligatorio.")]
-        [Display(Name = "Intervalo entre Dosis:")]
-        public int Intervalo { get; set; }
 
         [Required(ErrorMessage = "Campo Fecha Fin obligatorio.")]
         [Display(Name = "Fecha de Fin:")]
@@ -42,5 +34,8 @@ namespace WebAPICuidArte.Models
         [Required(ErrorMessage = "Campo Estado obligatorio.")]
         [Display(Name = "Estado:")]
         public int Estado { get; set; }
+
+        public ICollection<MedicamentoHorario> Horarios { get; set; } = new List<MedicamentoHorario>();
+
     }
 }
