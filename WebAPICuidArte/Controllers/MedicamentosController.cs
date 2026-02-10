@@ -189,13 +189,6 @@ namespace WebAPICuidArte.Controllers
             _context.Medicamentos.Add(medicamento);
             await _context.SaveChangesAsync(); // genera MedicamentoId
 
-            // Asignar FK a cada horario y guardar
-            foreach (var h in medicamento.Horarios)
-                h.MedicamentoId = medicamento.MedicamentoId;
-
-            _context.MedicamentoHorarios.AddRange(medicamento.Horarios);
-            await _context.SaveChangesAsync();
-
             // devolver con horarios ya persistidos
             var result = await _context.Medicamentos
                 .Include(m => m.Horarios)
