@@ -15,6 +15,6 @@ namespace WebAPICuidArte.Models
         public string Hora { get; set; } // ideal: TimeSpan
 
         [JsonIgnore]
-        public Medicament? Medicamento { get; set; }
+        public Medicamento? Medicamento { get; set; }
     }
 }
