@@ -42,5 +42,58 @@ namespace WebAPICuidArte.Controllers
 
             return Unauthorized("Correo o contraseña incorrectos.");
         }
+        [HttpPost("LoginGoogle")]
+        public IActionResult LoginGoogle([FromBody] GoogleLoginDTO googleData)
+        {
+            // =============================================================
+            // 1. BUSCAR EN CUIDADORES
+            // =============================================================
+
+            // A. Por UID
+            var cuidador = _context.Cuidadores.FirstOrDefault(c => c.FirebaseUid == googleData.FirebaseUid);
+            if (cuidador != null)
+            {
+                return Ok(new { TipoUsuario = "Cuidador", Usuario = cuidador });
+            }
+
+            // B. Por Correo (Vinculación)
+            cuidador = _context.Cuidadores.FirstOrDefault(c => c.Correo == googleData.Correo);
+            if (cuidador != null)
+            {
+                cuidador.FirebaseUid = googleData.FirebaseUid;
+                _context.SaveChanges();
+                return Ok(new { TipoUsuario = "Cuidador", Usuario = cuidador });
+            }
+
+            // =============================================================
+            // 2. BUSCAR EN ADULTOS MAYORES 
+            // =============================================================
+
+            // A. Por UID
+            var adulto = _context.AdultosMayores.FirstOrDefault(a => a.FirebaseUid == googleData.FirebaseUid);
+            if (adulto != null)
+            {
+                return Ok(new { TipoUsuario = "AdultoMayor", Usuario = adulto });
+            }
+
+            // B. Por Correo (Vinculación)
+            adulto = _context.AdultosMayores.FirstOrDefault(a => a.Correo == googleData.Correo);
+            if (adulto != null)
+            {
+                adulto.FirebaseUid = googleData.FirebaseUid;
+                _context.SaveChanges();
+                return Ok(new { TipoUsuario = "AdultoMayor", Usuario = adulto });
+            }
+
+            // =============================================================
+            // 3. NO EXISTE EN NINGUNO -> 404
+            // =============================================================
+            return NotFound();
+        }
+
+
     }
+
+
+
 }
