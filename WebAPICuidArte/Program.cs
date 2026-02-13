@@ -43,49 +43,12 @@ builder.Services.AddDbContext<BDContexto>(options => options.UseSqlServer(conexi
 
 var app = builder.Build();
 
-/*
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-*/
-
-// Proteger Swagger con Basic Auth
-var swaggerUser = builder.Configuration["SwaggerAuth:User"];
-var swaggerPass = builder.Configuration["SwaggerAuth:Password"];
-
-app.UseWhen(context => context.Request.Path.StartsWithSegments("/swagger"), appBuilder =>
-{
-    appBuilder.Use(async (context, next) =>
-    {
-        string authHeader = context.Request.Headers["Authorization"];
-
-        if (authHeader == null || !authHeader.StartsWith("Basic "))
-        {
-            context.Response.Headers["WWW-Authenticate"] = "Basic";
-            context.Response.StatusCode = 401;
-            return;
-        }
-
-        var encodedUsernamePassword = authHeader.Substring("Basic ".Length).Trim();
-        var encoding = System.Text.Encoding.GetEncoding("iso-8859-1");
-        var usernamePassword = encoding.GetString(Convert.FromBase64String(encodedUsernamePassword));
-
-        var parts = usernamePassword.Split(':');
-        var username = parts[0];
-        var password = parts[1];
-
-        if (username != swaggerUser || password != swaggerPass)
-        {
-            context.Response.StatusCode = 401;
-            return;
-        }
-
-        await next();
-    });
-});
 
 app.UseSwagger();
 app.UseSwaggerUI();
