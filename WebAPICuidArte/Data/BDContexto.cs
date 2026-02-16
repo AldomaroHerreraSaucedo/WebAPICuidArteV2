@@ -20,6 +20,7 @@ namespace WebAPICuidArte.Data
         public DbSet<Contacto> Contactos { get; set; }
         public DbSet<CitaMedica> CitasMedicas { get; set; }
         public DbSet<Lectura> Lecturas { get; set; }
+        public DbSet<InformacionEmergencia> InformacionEmergencias { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -51,6 +52,11 @@ namespace WebAPICuidArte.Data
             modelBuilder.Entity<Lectura2>().ToTable("lectura2");
             modelBuilder.Entity<AvanceLectura>().ToTable("AvanceLectura");
 
+            modelBuilder.Entity<InformacionEmergencia>().ToTable("InformacionEmergencia");
+            modelBuilder.Entity<InformacionEmergencia>()
+                .HasIndex(ie => ie.IdAdultoMayor)
+                .IsUnique();
+
             modelBuilder.Entity<Contacto>()
                 .HasOne<AdultoMayor>().WithMany().HasForeignKey(c => c.AdultoMayorId).OnDelete(DeleteBehavior.Cascade);
 
@@ -74,6 +80,12 @@ namespace WebAPICuidArte.Data
 
             modelBuilder.Entity<AdultoMayorMedicamento>()
                 .HasOne<Medicamento>().WithMany().HasForeignKey(amm => amm.MedicamentoId).OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<InformacionEmergencia>()
+               .HasOne<AdultoMayor>()
+               .WithMany()
+               .HasForeignKey(ie => ie.IdAdultoMayor)
+               .OnDelete(DeleteBehavior.Cascade);
         }
         public DbSet<WebAPICuidArte.Models.Lectura2> Lectura2 { get; set; } = default!;
         public DbSet<WebAPICuidArte.Models.AvanceLectura> AvanceLectura { get; set; } = default!;
