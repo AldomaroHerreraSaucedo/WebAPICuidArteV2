@@ -20,9 +20,11 @@ namespace WebAPICuidArte.Models
         [Display(Name = "Correo Electrónico:")]
         public string Correo { get; set; }
 
-        [Required(ErrorMessage = "Campo Contraseña obligatorio.")]
-        [StringLength(15, MinimumLength = 8, ErrorMessage = "La contraseña debe tener entre 8 y 15 caracteres.")]
+        
+       // [StringLength(15, MinimumLength = 8, ErrorMessage = "La contraseña debe tener entre 8 y 15 caracteres.")]
         [Display(Name = "Contraseña:")]
-        public string Contrasenia { get; set; }
+        public string? Contrasenia { get; set; }
+        [Display(Name = "ID de Firebase/Google")]
+        public string? FirebaseUid { get; set; }
     }
 }

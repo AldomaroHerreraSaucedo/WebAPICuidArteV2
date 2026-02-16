@@ -20,6 +20,9 @@ namespace WebAPICuidArte.Data
         public DbSet<Contacto> Contactos { get; set; }
         public DbSet<CitaMedica> CitasMedicas { get; set; }
         public DbSet<Lectura> Lecturas { get; set; }
+        public DbSet<Consejo> Consejos { get; set; }
+        public DbSet<Ejercicio> Ejercicio { get; set; }
+        public DbSet<AvanceLectura> AvanceLectura { get; set; } = default!;
         public DbSet<InformacionEmergencia> InformacionEmergencias { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -29,7 +32,7 @@ namespace WebAPICuidArte.Data
             modelBuilder.Entity<Cuidador>().ToTable("Cuidador");
             modelBuilder.Entity<AdultoMayorCuidador>()
                 .ToTable("AdultoMayorCuidador").HasKey(amc => new { amc.AdultoMayorId, amc.CuidadorId });
-            
+
             modelBuilder.Entity<Medicamento>().ToTable("Medicamento");
             modelBuilder.Entity<MedicamentoHorario>().ToTable("MedicamentoHorario");
             modelBuilder.Entity<MedicamentoHorario>()
@@ -40,7 +43,7 @@ namespace WebAPICuidArte.Data
             modelBuilder.Entity<MedicamentoHorario>()
                 .HasIndex(h => new { h.MedicamentoId, h.Hora })
                 .IsUnique();
-            
+
             modelBuilder.Entity<AdultoMayorMedicamento>()
                 .ToTable("AdultoMayorMedicamento").HasKey(amm => new { amm.AdultoMayorId, amm.MedicamentoId });
             modelBuilder.Entity<Enfermedad>().ToTable("Enfermedad");
@@ -48,9 +51,10 @@ namespace WebAPICuidArte.Data
                 .ToTable("AdultoMayorEnfermedad").HasKey(ame => new { ame.AdultoMayorId, ame.EnfermedadId });
             modelBuilder.Entity<Contacto>().ToTable("Contacto");
             modelBuilder.Entity<CitaMedica>().ToTable("CitaMedica");
-            modelBuilder.Entity<Lectura>().ToTable("Lectura");
-            modelBuilder.Entity<Lectura2>().ToTable("lectura2");
+            modelBuilder.Entity<Lectura>().ToTable("lectura");
             modelBuilder.Entity<AvanceLectura>().ToTable("AvanceLectura");
+            modelBuilder.Entity<Consejo>().ToTable("Consejo");
+            modelBuilder.Entity<Ejercicio>().ToTable("Ejercicio");
 
             modelBuilder.Entity<InformacionEmergencia>().ToTable("InformacionEmergencia");
             modelBuilder.Entity<InformacionEmergencia>()
@@ -87,7 +91,6 @@ namespace WebAPICuidArte.Data
                .HasForeignKey(ie => ie.IdAdultoMayor)
                .OnDelete(DeleteBehavior.Cascade);
         }
-        public DbSet<WebAPICuidArte.Models.Lectura2> Lectura2 { get; set; } = default!;
-        public DbSet<WebAPICuidArte.Models.AvanceLectura> AvanceLectura { get; set; } = default!;
+       
     }
 }
