@@ -6,7 +6,7 @@ namespace WebAPICuidArte.Models
     {
         [Key]
         public int LecturaId { get; set; }
-        public int AdultoId { get; set; }
+        public int AdultoMayorId { get; set; }
 
         [Required(ErrorMessage = "Campo título obligatorio.")]
         [StringLength(100, ErrorMessage = "El título no puede superar los 100 caracteres")]

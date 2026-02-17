@@ -51,7 +51,7 @@ namespace WebAPICuidArte.Data
                 .ToTable("AdultoMayorEnfermedad").HasKey(ame => new { ame.AdultoMayorId, ame.EnfermedadId });
             modelBuilder.Entity<Contacto>().ToTable("Contacto");
             modelBuilder.Entity<CitaMedica>().ToTable("CitaMedica");
-            modelBuilder.Entity<Lectura>().ToTable("lectura");
+            modelBuilder.Entity<Lectura>().ToTable("Lectura");
             modelBuilder.Entity<AvanceLectura>().ToTable("AvanceLectura");
             modelBuilder.Entity<Consejo>().ToTable("Consejo");
             modelBuilder.Entity<Ejercicio>().ToTable("Ejercicio");
@@ -61,6 +61,18 @@ namespace WebAPICuidArte.Data
                 .HasIndex(ie => ie.IdAdultoMayor)
                 .IsUnique();
 
+            modelBuilder.Entity<Lectura>()
+                .HasOne<AdultoMayor>().WithMany().HasForeignKey(c => c.AdultoMayorId).OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Consejo>()
+                .HasOne<AdultoMayor>().WithMany().HasForeignKey(c => c.AdultoMayorId).OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Ejercicio>()
+                .HasOne<AdultoMayor>().WithMany().HasForeignKey(c => c.AdultoMayorId).OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<AvanceLectura>()
+                .HasOne<Lectura>().WithMany().HasForeignKey(c => c.LecturaId).OnDelete(DeleteBehavior.Cascade);
+            
             modelBuilder.Entity<Contacto>()
                 .HasOne<AdultoMayor>().WithMany().HasForeignKey(c => c.AdultoMayorId).OnDelete(DeleteBehavior.Cascade);
 
