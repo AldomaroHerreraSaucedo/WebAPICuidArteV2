@@ -25,7 +25,10 @@ namespace WebAPICuidArte.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Lectura>>> GetLecturas()
         {
-            return await _context.Lecturas.ToListAsync();
+            return await _context.Lecturas
+                .Include(l => l.Avances)
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         // GET: api/Lecturas/5
@@ -104,5 +107,29 @@ namespace WebAPICuidArte.Controllers
         {
             return _context.Lecturas.Any(e => e.LecturaId == id);
         }
+
+        [HttpPost("{lecturaId}/avances")]
+        public async Task<IActionResult> AgregarAvance(int lecturaId, AvanceLectura avance)
+        {
+            var lectura = await _context.Lecturas
+                .Include(l => l.Avances)
+                .FirstOrDefaultAsync(l => l.LecturaId == lecturaId);
+
+            if (lectura == null)
+                return NotFound("Lectura no encontrada");
+
+            avance.LecturaId = lecturaId;
+            lectura.Avances.Add(avance);
+
+            lectura.UltimaPaginaLeida += avance.PaginasLeidas;
+
+            if (lectura.UltimaPaginaLeida > lectura.PaginasTotales)
+                lectura.UltimaPaginaLeida = lectura.PaginasTotales;
+
+            await _context.SaveChangesAsync();
+
+            return Ok(lectura);
+        }
+
     }
 }

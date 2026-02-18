@@ -7,7 +7,6 @@ namespace WebAPICuidArte.Models
         [Key]
         public int AvanceId { get; set; }
         public int LecturaId { get; set; }
-        public int AdultoMayorId { get; set; }
 
         [Required(ErrorMessage = "Campo hora inicio obligatorio.")]
         public string HoraInicio { get; set; }

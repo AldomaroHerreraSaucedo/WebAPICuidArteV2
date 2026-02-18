@@ -71,8 +71,11 @@ namespace WebAPICuidArte.Data
                 .HasOne<AdultoMayor>().WithMany().HasForeignKey(c => c.AdultoMayorId).OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<AvanceLectura>()
-                .HasOne<Lectura>().WithMany().HasForeignKey(c => c.LecturaId).OnDelete(DeleteBehavior.Cascade);
-            
+                .HasOne<Lectura>()
+                .WithMany(l => l.Avances)
+                .HasForeignKey(c => c.LecturaId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<Contacto>()
                 .HasOne<AdultoMayor>().WithMany().HasForeignKey(c => c.AdultoMayorId).OnDelete(DeleteBehavior.Cascade);
 
