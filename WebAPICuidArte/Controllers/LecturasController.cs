@@ -35,12 +35,13 @@ namespace WebAPICuidArte.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Lectura>> GetLectura(int id)
         {
-            var lectura = await _context.Lecturas.FindAsync(id);
+            var lectura = await _context.Lecturas
+                .Include(l => l.Avances)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(l => l.LecturaId == id);
 
             if (lectura == null)
-            {
                 return NotFound();
-            }
 
             return lectura;
         }
@@ -112,7 +113,7 @@ namespace WebAPICuidArte.Controllers
         public async Task<IActionResult> AgregarAvance(int lecturaId, AvanceLectura avance)
         {
             var lectura = await _context.Lecturas
-                .Include(l => l.Avances)
+                .Include(l => l.Avances)    
                 .FirstOrDefaultAsync(l => l.LecturaId == lecturaId);
 
             if (lectura == null)
