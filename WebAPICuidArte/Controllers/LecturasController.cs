@@ -93,6 +93,7 @@ namespace WebAPICuidArte.Controllers
                 {
                     avance.AvanceId = 0;
                     avance.LecturaId = 0;
+
                 }
             }
 
