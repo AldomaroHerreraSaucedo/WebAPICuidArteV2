@@ -82,7 +82,21 @@ namespace WebAPICuidArte.Controllers
         [HttpPost]
         public async Task<ActionResult<Lectura>> PostLectura(Lectura lectura)
         {
-            _context.Lecturas.Add(lectura);
+            if (lectura == null) 
+                return BadRequest();
+
+            lectura.LecturaId = 0;
+
+            if (lectura.Avances != null)
+            {
+                foreach (var avance in lectura.Avances)
+                {
+                    avance.AvanceId = 0;
+                    avance.LecturaId = 0;
+                }
+            }
+
+            _context.Lecturas.Add(lectura); 
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetLectura", new { id = lectura.LecturaId }, lectura);
