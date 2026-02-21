@@ -5,7 +5,7 @@ namespace WebAPICuidArte.Models
     public class InformacionEmergencia
     {
         [Key]
-        public int IdInfoEmergencia { get; set; }
+        public int InfoEmergenciaId { get; set; }
 
         [Required(ErrorMessage = "El ID del Adulto Mayor es obligatorio.")]
         public int AdultoMayorId { get; set; }
