@@ -47,7 +47,7 @@ namespace WebAPICuidArte.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutInformacionEmergencia(int id, InformacionEmergencia informacionEmergencia)
         {
-            if (id != informacionEmergencia.IdInfoEmergencia)
+            if (id != informacionEmergencia.InfoEmergenciaId)
             {
                 return BadRequest();
             }
@@ -81,7 +81,7 @@ namespace WebAPICuidArte.Controllers
             _context.InformacionEmergencias.Add(informacionEmergencia);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetInformacionEmergencia", new { id = informacionEmergencia.IdInfoEmergencia }, informacionEmergencia);
+            return CreatedAtAction("GetInformacionEmergencia", new { id = informacionEmergencia.InfoEmergenciaId }, informacionEmergencia);
         }
 
         // DELETE: api/InformacionEmergencias/5
@@ -102,7 +102,7 @@ namespace WebAPICuidArte.Controllers
 
         private bool InformacionEmergenciaExists(int id)
         {
-            return _context.InformacionEmergencias.Any(e => e.IdInfoEmergencia == id);
+            return _context.InformacionEmergencias.Any(e => e.InfoEmergenciaId == id);
         }
     }
 }
