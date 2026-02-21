@@ -58,8 +58,10 @@ namespace WebAPICuidArte.Data
 
             modelBuilder.Entity<InformacionEmergencia>().ToTable("InformacionEmergencia");
             modelBuilder.Entity<InformacionEmergencia>()
-                .HasIndex(ie => ie.IdAdultoMayor)
-                .IsUnique();
+                .HasOne<AdultoMayor>()
+                .WithOne()
+                .HasForeignKey<InformacionEmergencia>(ie => ie.AdultoMayorId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Lectura>()
                 .HasOne<AdultoMayor>().WithMany().HasForeignKey(c => c.AdultoMayorId).OnDelete(DeleteBehavior.Cascade);
@@ -100,11 +102,6 @@ namespace WebAPICuidArte.Data
             modelBuilder.Entity<AdultoMayorMedicamento>()
                 .HasOne<Medicamento>().WithMany().HasForeignKey(amm => amm.MedicamentoId).OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<InformacionEmergencia>()
-               .HasOne<AdultoMayor>()
-               .WithMany()
-               .HasForeignKey(ie => ie.IdAdultoMayor)
-               .OnDelete(DeleteBehavior.Cascade);
         }
        
     }
